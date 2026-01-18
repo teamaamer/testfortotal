@@ -199,14 +199,16 @@
         padding: 1rem 1.5rem;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        flex-direction: column;
+        gap: 0.75rem;
     }
     
     .course-stats {
         display: flex;
         gap: 1rem;
         align-items: center;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
     
     .stat-item {
@@ -230,6 +232,45 @@
         display: flex;
         gap: 0.5rem;
         align-items: center;
+        flex-wrap: wrap;
+    }
+    
+    .action-btn {
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.8125rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .edit-btn {
+        background: rgba(102, 126, 234, 0.2);
+        color: #60a5fa;
+        border: 1px solid rgba(102, 126, 234, 0.3);
+    }
+    
+    .edit-btn:hover {
+        background: rgba(102, 126, 234, 0.3);
+        color: #93c5fd;
+        transform: translateY(-2px);
+    }
+    
+    .delete-btn {
+        background: rgba(239, 68, 68, 0.2);
+        color: #f87171;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    
+    .delete-btn:hover {
+        background: rgba(239, 68, 68, 0.3);
+        color: #fca5a5;
+        transform: translateY(-2px);
     }
     
     .view-btn {
@@ -250,15 +291,6 @@
         transform: translateY(-2px);
         box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
         color: white;
-    }
-    
-    .dropdown-toggle {
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid var(--glass-border);
-        color: white;
-        padding: 0.5rem;
-        border-radius: 8px;
-        cursor: pointer;
     }
     
     @media (max-width: 768px) {
@@ -341,19 +373,12 @@
                     
                     <div class="course-actions">
                         @if(auth()->user()->hasRole('admin') || (auth()->user()->account->id ?? null) == $course->account_id)
-                            <div class="btn-group">
-                                <button type="button" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="{{ url('dashboard/courses/' . $course->id) . '/edit' }}">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </a>
-                                    <a class="dropdown-item text-danger" href="#" onclick="confirmDelete({{ $course->id }}); return false;">
-                                        <i class="fas fa-trash"></i> Delete
-                                    </a>
-                                </div>
-                            </div>
+                            <a href="{{ url('dashboard/courses/' . $course->id) . '/edit' }}" class="action-btn edit-btn">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <button type="button" class="action-btn delete-btn" onclick="confirmDelete({{ $course->id }})">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
                         @endif
                         <a href="{{ url('dashboard/courses/' . $course->id) }}" class="view-btn">
                             <i class="fas fa-arrow-right"></i> View

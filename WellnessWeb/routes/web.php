@@ -81,7 +81,7 @@ Route::get('/blocked', function () {
 
 
 Route::group(['middleware' => ['auth', 'check.account.status'],  'prefix' => 'dashboard'], function () {
-    Route::get('/', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
     Route::get('datatables/getAccountDocuments/{id}', [DatatablesController::class, 'getAccountDocuments']);
     Route::get('datatables/getCareerAppliedStudents/{id}', [DatatablesController::class, 'getCareerAppliedStudents']);

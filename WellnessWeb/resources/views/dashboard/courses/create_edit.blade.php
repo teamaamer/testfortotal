@@ -4,7 +4,6 @@
 
 @section('css')
 <link href='https://fonts.googleapis.com/css?family=Lato:300,400,600,700' rel='stylesheet' type='text/css'>
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet">
 <style>
     * {
         font-family: 'Lato', sans-serif;
@@ -150,13 +149,14 @@
     
     .form-row {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
         margin-bottom: 1.5rem;
     }
     
     .form-row.two-col {
         grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
     }
     
     .form-row.four-col {
@@ -194,6 +194,7 @@
     input[type="text"].form-control,
     input[type="number"].form-control,
     input[type="date"].form-control {
+        width: 100%;
         background: rgba(255, 255, 255, 0.1);
         border: 1px solid var(--glass-border);
         border-radius: 10px;
@@ -271,64 +272,6 @@
     .btn-cancel:hover {
         background: rgba(255, 255, 255, 0.15);
         color: white;
-    }
-    
-    .note-editor.note-frame {
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid var(--glass-border);
-        border-radius: 10px;
-        color: white;
-    }
-    
-    .note-toolbar {
-        background: rgba(255, 255, 255, 0.08);
-        border-bottom: 1px solid var(--glass-border);
-        border-radius: 10px 10px 0 0;
-    }
-    
-    .note-btn-group .note-btn {
-        background: transparent;
-        border: none;
-        color: rgba(255, 255, 255, 0.8);
-    }
-    
-    .note-btn-group .note-btn:hover,
-    .note-btn-group .note-btn:focus,
-    .note-btn-group .note-btn.active {
-        background: rgba(102, 126, 234, 0.3);
-        color: white;
-    }
-    
-    .note-editable {
-        background: rgba(255, 255, 255, 0.05);
-        color: white;
-        min-height: 300px;
-    }
-    
-    .note-editable p,
-    .note-editable ul,
-    .note-editable ol,
-    .note-editable li {
-        color: white;
-    }
-    
-    .note-statusbar {
-        background: rgba(255, 255, 255, 0.05);
-        border-top: 1px solid var(--glass-border);
-        color: rgba(255, 255, 255, 0.6);
-    }
-    
-    .note-dropdown-menu {
-        background: rgba(42, 42, 62, 0.95);
-        border: 1px solid var(--glass-border);
-    }
-    
-    .note-dropdown-menu .note-dropdown-item {
-        color: white;
-    }
-    
-    .note-dropdown-menu .note-dropdown-item:hover {
-        background: rgba(102, 126, 234, 0.3);
     }
     
     .form-card .row {
@@ -445,8 +388,9 @@
 
             <!-- Full Description -->
             <div class="form-group">
-                <label for="summernote">Full Description</label>
-                <textarea name="summernote" id="summernote" class="form-control summernote">{{ old('full_summary', $course->full_summary ?? '') }}</textarea>
+                <label for="full_summary">Full Description</label>
+                <textarea name="full_summary" id="full_summary" class="form-control" rows="8"
+                          placeholder="Provide a detailed description of the course content, learning objectives, and what students will achieve">{{ old('full_summary', $course->full_summary ?? '') }}</textarea>
             </div>
 
             <!-- Course Requirements -->
@@ -465,42 +409,65 @@
             </h3>
             <p class="section-description">Set pricing, scheduling, and administrative information</p>
             
-            <div class="form-group">
-                <label for="price">Price *</label>
-                <input type="number" id="price" name="price" class="form-control"
-                       value="{{ old('price', isset($course) ? $course->price : null) }}"
-                       placeholder="0.00" step="0.01" min="0" required>
+            <div class="form-row two-col">
+                <div class="form-group">
+                    <label for="price">Price *</label>
+                    <input type="number" id="price" name="price" class="form-control"
+                           value="{{ old('price', isset($course) ? $course->price : null) }}"
+                           placeholder="0.00" step="0.01" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="start_on">Start Date *</label>
+                    <input id="start_on" name="start_on" type="date" class="form-control"
+                           value="{{ old('start_on', isset($course) ? $course->start_on : null) }}" required>
+                </div>
             </div>
             
-            <div class="form-group">
-                <label for="start_on">Start Date *</label>
-                <input id="start_on" name="start_on" type="date" class="form-control"
-                       value="{{ old('start_on', isset($course) ? $course->start_on : null) }}" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="status">Status *</label>
-                <select id="status" name="status" class="form-control" required>
-                    <option disabled {{ $currentStatus == '' ? 'selected' : '' }}>Select status</option>
-                    @foreach ($statuses as $status)
-                        <option value="{{ $status }}" {{ $currentStatus == $status ? 'selected' : '' }}>
-                            {{ ucfirst($status) }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="account_id">Academy *</label>
-                <select name="account_id" id="account_id" class="form-control" required>
-                    <option disabled value="">Select academy</option>
-                    @foreach ($academies as $id => $name)
-                        <option value="{{ $id }}"
-                                {{ old('account_id', isset($course) ? $course->account_id : null) == $id ? 'selected' : '' }}>
-                            {{ $name }}
-                        </option>
-                    @endforeach
-                </select>
+            <div class="form-row two-col">
+                <div class="form-group">
+                    <label for="status">Status *</label>
+                    <div class="custom-dropdown" id="status-dropdown">
+                        <div class="custom-dropdown-toggle">
+                            <span>{{ $currentStatus ? ucfirst($currentStatus) : 'Select status' }}</span>
+                            <svg class="custom-dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+                                <path fill="currentColor" d="M6 9L1 4h10z"/>
+                            </svg>
+                        </div>
+                        <div class="custom-dropdown-menu">
+                            @foreach ($statuses as $status)
+                            <div class="custom-dropdown-item {{ $currentStatus == $status ? 'selected' : '' }}" data-value="{{ $status }}">
+                                <i class="fas fa-{{ $status == 'active' ? 'check-circle' : 'pause-circle' }}"></i>
+                                <span>{{ ucfirst($status) }}</span>
+                                <i class="fas fa-check checkmark"></i>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <input type="hidden" id="status" name="status" value="{{ $currentStatus }}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="account_id">Academy *</label>
+                    <div class="custom-dropdown" id="academy-dropdown">
+                        <div class="custom-dropdown-toggle">
+                            <span>{{ old('account_id', isset($course) ? $academies[$course->account_id] ?? 'Select academy' : 'Select academy') }}</span>
+                            <svg class="custom-dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+                                <path fill="currentColor" d="M6 9L1 4h10z"/>
+                            </svg>
+                        </div>
+                        <div class="custom-dropdown-menu">
+                            @foreach ($academies as $id => $name)
+                            <div class="custom-dropdown-item {{ old('account_id', isset($course) ? $course->account_id : null) == $id ? 'selected' : '' }}" data-value="{{ $id }}">
+                                <i class="fas fa-school"></i>
+                                <span>{{ $name }}</span>
+                                <i class="fas fa-check checkmark"></i>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <input type="hidden" id="account_id" name="account_id" value="{{ old('account_id', isset($course) ? $course->account_id : '') }}" required>
+                </div>
             </div>
         </div>
 
@@ -518,9 +485,21 @@
 @endsection
 
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Initialize custom dropdowns
+        initCustomDropdown('status-dropdown', function(value) {
+            $('#status').val(value);
+        });
+        
+        initCustomDropdown('academy-dropdown', function(value) {
+            $('#account_id').val(value);
+        });
+    });
+</script>
+@endsection
 
+@section('js')
     <script>
         function previewCover(event) {
             const file = event.target.files[0];
@@ -532,25 +511,5 @@
             };
             reader.readAsDataURL(file);
         }
-
-        $(function () {
-            $('.summernote').summernote({
-                height: 300,
-                placeholder: 'Enter detailed course description...',
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'italic', 'underline', 'clear']],
-                    ['fontname', ['fontname']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['fullscreen', 'codeview', 'help']]
-                ],
-                styleTags: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
-                fontNames: ['Lato', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Helvetica', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana'],
-                fontNamesIgnoreCheck: ['Lato']
-            });
-        });
     </script>
 @endsection

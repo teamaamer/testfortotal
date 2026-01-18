@@ -315,31 +315,59 @@
 
                     <div class="form-group">
                         <label for="role">Role</label>
-                        <select id="role" name="role" class="form-control custom-select"
-                            {{ auth()->user()->isAdmin() ? '' : 'disabled' }} required>
-                            <option disabled {{ old('role', $account->user->role ?? '') == '' ? 'selected' : '' }}>
-                                Select role</option>
-                            @foreach (['admin', 'student', 'academy', 'center'] as $role)
-                                <option value="{{ $role }}"
-                                    {{ old('role', $account->user->role ?? '') == $role ? 'selected' : '' }}>
-                                    {{ ucfirst($role) }}
-                                </option>
-                            @endforeach
-                        </select>
+                        <div class="custom-dropdown" id="role-dropdown" {{ auth()->user()->isAdmin() ? '' : 'style="pointer-events: none; opacity: 0.6;"' }}>
+                            <div class="custom-dropdown-toggle">
+                                <span>{{ old('role', $account->user->role ?? '') ? ucfirst(old('role', $account->user->role ?? '')) : 'Select role' }}</span>
+                                <svg class="custom-dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+                                    <path fill="currentColor" d="M6 9L1 4h10z"/>
+                                </svg>
+                            </div>
+                            <div class="custom-dropdown-menu">
+                                <div class="custom-dropdown-item {{ old('role', $account->user->role ?? '') == 'admin' ? 'selected' : '' }}" data-value="admin">
+                                    <i class="fas fa-user-shield"></i>
+                                    <span>Admin</span>
+                                    <i class="fas fa-check checkmark"></i>
+                                </div>
+                                <div class="custom-dropdown-item {{ old('role', $account->user->role ?? '') == 'student' ? 'selected' : '' }}" data-value="student">
+                                    <i class="fas fa-user-graduate"></i>
+                                    <span>Student</span>
+                                    <i class="fas fa-check checkmark"></i>
+                                </div>
+                                <div class="custom-dropdown-item {{ old('role', $account->user->role ?? '') == 'academy' ? 'selected' : '' }}" data-value="academy">
+                                    <i class="fas fa-school"></i>
+                                    <span>Academy</span>
+                                    <i class="fas fa-check checkmark"></i>
+                                </div>
+                                <div class="custom-dropdown-item {{ old('role', $account->user->role ?? '') == 'center' ? 'selected' : '' }}" data-value="center">
+                                    <i class="fas fa-building"></i>
+                                    <span>Center</span>
+                                    <i class="fas fa-check checkmark"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="role" name="role" value="{{ old('role', $account->user->role ?? '') }}" required>
                     </div>
 
                     <div class="form-group">
                         <label for="status">Status</label>
-                        <select id="status" name="status" class="form-control custom-select"
-                            {{ auth()->user()->isAdmin() ? '' : 'disabled' }} required>
-                            <option disabled {{ $currentStatus == '' ? 'selected' : '' }}>Select status</option>
-                            @foreach ($statuses as $status)
-                                <option value="{{ $status }}"
-                                    {{ $currentStatus == $status ? 'selected' : '' }}>
-                                    {{ ucfirst($status) }}
-                                </option>
-                            @endforeach
-                        </select>
+                        <div class="custom-dropdown" id="status-dropdown" {{ auth()->user()->isAdmin() ? '' : 'style="pointer-events: none; opacity: 0.6;"' }}>
+                            <div class="custom-dropdown-toggle">
+                                <span>{{ $currentStatus ? ucfirst($currentStatus) : 'Select status' }}</span>
+                                <svg class="custom-dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+                                    <path fill="currentColor" d="M6 9L1 4h10z"/>
+                                </svg>
+                            </div>
+                            <div class="custom-dropdown-menu">
+                                @foreach ($statuses as $status)
+                                <div class="custom-dropdown-item {{ $currentStatus == $status ? 'selected' : '' }}" data-value="{{ $status }}">
+                                    <i class="fas fa-{{ $status == 'active' ? 'check-circle' : ($status == 'blocked' ? 'ban' : ($status == 'new' ? 'star' : 'pause-circle')) }}"></i>
+                                    <span>{{ ucfirst($status) }}</span>
+                                    <i class="fas fa-check checkmark"></i>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <input type="hidden" id="status" name="status" value="{{ $currentStatus }}" required>
                     </div>
 
                     @unless (auth()->user()->isAdmin())
@@ -497,6 +525,20 @@
 
 @section('js')
     <script>
+        $(document).ready(function() {
+            // Initialize custom dropdowns
+            @if(auth()->user()->isAdmin())
+            initCustomDropdown('role-dropdown', function(value) {
+                $('#role').val(value);
+                toggleStudentCards();
+            });
+            
+            initCustomDropdown('status-dropdown', function(value) {
+                $('#status').val(value);
+            });
+            @endif
+        });
+        
         document.getElementById('avatar-input').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {

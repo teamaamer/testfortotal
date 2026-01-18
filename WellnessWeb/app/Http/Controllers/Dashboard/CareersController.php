@@ -33,7 +33,7 @@ class CareersController extends Controller
             });
         }
 
-        $careers = $query->paginate(10)->withQueryString();
+        $careers = $query->get();
         return view('dashboard.careers.index')->with(compact('careers'));
     }
 

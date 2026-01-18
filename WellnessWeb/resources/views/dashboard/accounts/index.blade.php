@@ -846,22 +846,78 @@
             <input type="text" id="searchInput" placeholder="Search accounts...">
         </div>
         <div class="filter-box">
-            <select id="filterType">
-                <option value="">All Types</option>
-                <option value="admin">Admin</option>
-                <option value="student">Student</option>
-                <option value="academy">Academy</option>
-                <option value="center">Center</option>
-            </select>
+            <div class="custom-dropdown" id="filter-type-dropdown">
+                <div class="custom-dropdown-toggle">
+                    <span>All Types</span>
+                    <svg class="custom-dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+                        <path fill="currentColor" d="M6 9L1 4h10z"/>
+                    </svg>
+                </div>
+                <div class="custom-dropdown-menu">
+                    <div class="custom-dropdown-item selected" data-value="">
+                        <i class="fas fa-users"></i>
+                        <span>All Types</span>
+                        <i class="fas fa-check checkmark"></i>
+                    </div>
+                    <div class="custom-dropdown-item" data-value="admin">
+                        <i class="fas fa-user-shield"></i>
+                        <span>Admin</span>
+                        <i class="fas fa-check checkmark"></i>
+                    </div>
+                    <div class="custom-dropdown-item" data-value="student">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>Student</span>
+                        <i class="fas fa-check checkmark"></i>
+                    </div>
+                    <div class="custom-dropdown-item" data-value="academy">
+                        <i class="fas fa-school"></i>
+                        <span>Academy</span>
+                        <i class="fas fa-check checkmark"></i>
+                    </div>
+                    <div class="custom-dropdown-item" data-value="center">
+                        <i class="fas fa-building"></i>
+                        <span>Center</span>
+                        <i class="fas fa-check checkmark"></i>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="filter-box">
-            <select id="filterStatus">
-                <option value="">All Status</option>
-                <option value="active">Active</option>
-                <option value="new">New</option>
-                <option value="inactive">Inactive</option>
-                <option value="blocked">Blocked</option>
-            </select>
+            <div class="custom-dropdown" id="filter-status-dropdown">
+                <div class="custom-dropdown-toggle">
+                    <span>All Status</span>
+                    <svg class="custom-dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+                        <path fill="currentColor" d="M6 9L1 4h10z"/>
+                    </svg>
+                </div>
+                <div class="custom-dropdown-menu">
+                    <div class="custom-dropdown-item selected" data-value="">
+                        <i class="fas fa-list"></i>
+                        <span>All Status</span>
+                        <i class="fas fa-check checkmark"></i>
+                    </div>
+                    <div class="custom-dropdown-item" data-value="active">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Active</span>
+                        <i class="fas fa-check checkmark"></i>
+                    </div>
+                    <div class="custom-dropdown-item" data-value="new">
+                        <i class="fas fa-star"></i>
+                        <span>New</span>
+                        <i class="fas fa-check checkmark"></i>
+                    </div>
+                    <div class="custom-dropdown-item" data-value="inactive">
+                        <i class="fas fa-pause-circle"></i>
+                        <span>Inactive</span>
+                        <i class="fas fa-check checkmark"></i>
+                    </div>
+                    <div class="custom-dropdown-item" data-value="blocked">
+                        <i class="fas fa-ban"></i>
+                        <span>Blocked</span>
+                        <i class="fas fa-check checkmark"></i>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -890,14 +946,19 @@
         $(document).ready(function() {
             loadAccounts();
             
-            // Search functionality
-            $('#searchInput').on('input', function() {
+            // Initialize custom dropdowns
+            initCustomDropdown('filter-type-dropdown', function(value) {
                 currentPage = 1;
                 filterAndRenderAccounts();
             });
             
-            // Filter functionality
-            $('#filterType, #filterStatus').on('change', function() {
+            initCustomDropdown('filter-status-dropdown', function(value) {
+                currentPage = 1;
+                filterAndRenderAccounts();
+            });
+            
+            // Search functionality
+            $('#searchInput').on('input', function() {
                 currentPage = 1;
                 filterAndRenderAccounts();
             });
@@ -925,8 +986,8 @@
         
         function filterAndRenderAccounts() {
             const searchTerm = $('#searchInput').val().toLowerCase();
-            const filterType = $('#filterType').val().toLowerCase();
-            const filterStatus = $('#filterStatus').val().toLowerCase();
+            const filterType = ($('#filter-type-dropdown').data('selected-value') || '').toLowerCase();
+            const filterStatus = ($('#filter-status-dropdown').data('selected-value') || '').toLowerCase();
             
             let filtered = allAccounts.filter(account => {
                 const matchesSearch = !searchTerm || 

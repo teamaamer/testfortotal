@@ -10,24 +10,30 @@
     }
 
     .page-header {
+        background: var(--card-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 2rem;
         gap: 1rem;
         flex-wrap: wrap;
     }
 
     .page-header h1 {
-        font-size: 1.75rem;
+        font-size: 2rem;
         font-weight: 700;
         margin: 0;
+        color: white;
     }
 
     .page-header p {
         color: rgba(255, 255, 255, 0.7);
-        font-size: 0.875rem;
-        margin: 0.25rem 0 0 0;
+        font-size: 0.9375rem;
+        margin: 0.5rem 0 0 0;
     }
 
     .header-actions {
@@ -355,11 +361,6 @@
                 </form>
             </div>
         @endforeach
-    </div>
-
-    <!-- Pagination -->
-    <div style="display: flex; justify-content: center; margin-top: 2rem;">
-        {{ $careers->links('pagination::bootstrap-4') }}
     </div>
 @endsection
 

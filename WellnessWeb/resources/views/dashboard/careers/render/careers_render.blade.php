@@ -1,89 +1,75 @@
 @foreach ($careers as $career)
-    <div class="col-12 col-sm-6 col-md-4 flex-column">
-        <div class="card shadow">
-
-            <!-- Title -->
-            <div class="card-header border-bottom-0">
-                <h5 class="mb-1">{{ $career->title }}</h5>
+    <div class="col-12 col-sm-6 col-md-4">
+        <div class="career-card">
+            <!-- Header -->
+            <div class="career-card-header">
+                <div class="career-badge">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <h3 class="career-card-title">{{ $career->title }}</h3>
             </div>
 
             <!-- Body -->
-            <div class="card-body" style="padding-bottom: 1px;">
-
-                <!-- Avatar + Name -->
-                <div class="d-flex align-items-center mb-3">
-                    <img src="{{ asset('/uploads/avatars/' . $career->account->avatar) }}" class="rounded-circle me-3"
-                        style="width: 45px; height: 45px; object-fit: cover;" />
-
-                    <div class="ml-2">
-                        <h6 class="fw-bold mb-0">{{ $career->account->name }}</h6>
-                        <small class="text-muted">{{ $career->city }} ({{ $career->country }})</small>
+            <div class="career-card-body">
+                <!-- Company Info -->
+                <div class="career-company">
+                    <img src="{{ asset('/uploads/avatars/' . $career->account->avatar) }}" 
+                         class="career-avatar" 
+                         alt="{{ $career->account->name }}">
+                    <div class="career-company-info">
+                        <div class="career-company-name">{{ $career->account->name }}</div>
+                        <div class="career-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            {{ $career->city }}, {{ $career->country }}
+                        </div>
                     </div>
                 </div>
 
-                <!-- Summary - 2 lines only -->
-                <p class="text-muted small mb-3 summary-line">
-                    <span class="fw-bold">About:</span> {{ $career->summary }}
-                </p>
+                <!-- Summary -->
+                <p class="career-summary">{{ Str::limit($career->summary, 100) }}</p>
 
                 <!-- Salary -->
-                <i class="fas fa-dollar-sign text-success"></i>
-                <span class="fw-semibold">{{ $career->salary ?? '—' }}</span>
-
+                <div class="career-salary">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>{{ $career->salary ?? 'Competitive' }}</span>
+                </div>
             </div>
 
             <!-- Footer -->
-            <div class="card-footer bg-white" style="padding-top: 1px;">
-                <div class="d-flex justify-content-between align-items-center">
-
-                    <div class="text-success fw-bold">
-                        100% Qualify
-                    </div>
-
-                    <div>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-icon"
-                                data-toggle="dropdown" aria-expanded="false">
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-
-                            <div class="dropdown-menu" role="menu">
-
-                                <a class="dropdown-item" href="{{ url('dashboard/careers/' . $career->id) . '/edit' }}">
-                                    Edit
-                                </a>
-
-                                <!-- Delete Trigger -->
-                                <a class="dropdown-item text-danger" href="#"
-                                    onclick="confirmDelete({{ $career->id }}); return false;">
-                                    Delete
-                                </a>
-
-                            </div>
-                        </div>
-
-                        <a href="{{ url('dashboard/careers/' . $career->id) }}" class="btn btn-sm btn-primary">
-                            <i class="fas fa-user"></i> View Job
-                        </a>
-
-                        <!-- Apply/Unapply Button -->
-                        <button
-                            class="btn btn-sm {{ auth()->user()->account->appliedCareers->contains($career->id) ? 'btn-success' : 'btn-primary' }} apply-btn"
-                            data-id="{{ $career->id }}">
-                            {{ auth()->user()->account->appliedCareers->contains($career->id) ? 'Applied' : 'Apply' }}
+            <div class="career-card-footer">
+                <div class="career-actions">
+                    @if(auth()->user()->hasRole('admin') || (auth()->user()->account->id ?? null) == $career->account_id)
+                    <div class="dropdown">
+                        <button class="action-btn dropdown-btn" data-toggle="dropdown">
+                            <i class="fas fa-ellipsis-v"></i>
                         </button>
-
-
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ url('dashboard/careers/' . $career->id . '/edit') }}">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <a class="dropdown-item text-danger" href="#" onclick="confirmDelete({{ $career->id }}); return false;">
+                                <i class="fas fa-trash"></i> Delete
+                            </a>
+                        </div>
                     </div>
+                    @endif
+
+                    <a href="{{ url('dashboard/careers/' . $career->id) }}" class="action-btn view-btn">
+                        <i class="fas fa-eye"></i> View
+                    </a>
+
+                    <button class="action-btn {{ auth()->user()->account->appliedCareers->contains($career->id) ? 'applied-btn' : 'apply-btn' }}" 
+                            data-id="{{ $career->id }}">
+                        <i class="fas fa-{{ auth()->user()->account->appliedCareers->contains($career->id) ? 'check' : 'paper-plane' }}"></i>
+                        {{ auth()->user()->account->appliedCareers->contains($career->id) ? 'Applied' : 'Apply' }}
+                    </button>
                 </div>
             </div>
-
         </div>
     </div>
 
     <!-- Hidden Delete Form -->
-    <form id="delete-career-{{ $career->id }}" action="{{ url('dashboard/careers/' . $career->id) }}" method="POST"
-        style="display: none;">
+    <form id="delete-career-{{ $career->id }}" action="{{ url('dashboard/careers/' . $career->id) }}" method="POST" style="display: none;">
         @csrf
         @method('DELETE')
     </form>

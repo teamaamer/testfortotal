@@ -337,12 +337,24 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
                     <div class="form-group" style="margin-bottom: 0;">
                         <label for="type">Problem Type *</label>
-                        <select id="type" name="type" class="form-control" required>
-                            <option disabled selected>Select a category</option>
-                            @foreach ($types as $type)
-                                <option value="{{ $type }}">{{ ucfirst($type) }}</option>
-                            @endforeach
-                        </select>
+                        <div class="custom-dropdown" id="type-dropdown">
+                            <div class="custom-dropdown-toggle">
+                                <span>Select a category</span>
+                                <svg class="custom-dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+                                    <path fill="currentColor" d="M6 9L1 4h10z"/>
+                                </svg>
+                            </div>
+                            <div class="custom-dropdown-menu">
+                                @foreach ($types as $type)
+                                <div class="custom-dropdown-item" data-value="{{ $type }}">
+                                    <i class="fas fa-{{ $type == 'support' ? 'headset' : ($type == 'contact' ? 'envelope' : 'question-circle') }}"></i>
+                                    <span>{{ ucfirst($type) }}</span>
+                                    <i class="fas fa-check checkmark"></i>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <input type="hidden" id="type" name="type" required>
                     </div>
 
                     <div class="form-group" style="margin-bottom: 0;">
@@ -369,6 +381,13 @@
 @section('js')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    $(document).ready(function() {
+        // Initialize custom dropdown
+        initCustomDropdown('type-dropdown', function(value) {
+            $('#type').val(value);
+        });
+    });
+    
     $('#contactForm').on('submit', function(e) {
               e.preventDefault();
               let form = $(this);

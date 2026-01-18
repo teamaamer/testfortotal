@@ -61,8 +61,27 @@
         .input-wrapper { position: relative; }
         .input-icon { position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); color: rgba(255, 255, 255, 0.4); font-size: 1.125rem; }
         .form-control { width: 100%; padding: 1rem 1rem 1rem 3.5rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.05); color: white; font-family: 'Outfit', sans-serif; font-size: 1rem; }
+        .form-control::placeholder { font-family: 'Outfit', sans-serif; }
         select.form-control { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.4)' d='M6 9L1 4h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1.25rem center; }
         .btn-primary { width: 100%; padding: 1rem; background: var(--primary-gradient); border: none; border-radius: 12px; color: white; font-weight: 600; cursor: pointer; margin-top: 0.5rem; font-size: 1rem; font-family: 'Outfit', sans-serif; }
+        
+        /* Custom Dropdown Styles */
+        .custom-dropdown { position: relative; min-width: 180px; width: 100%; }
+        .custom-dropdown-toggle { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 1rem 2.5rem 1rem 3.5rem; color: white; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; width: 100%; display: flex; align-items: center; justify-content: space-between; user-select: none; font-family: 'Outfit', sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .custom-dropdown-toggle span { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .custom-dropdown-toggle:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(102, 126, 234, 0.4); }
+        .custom-dropdown-toggle.active { border-color: rgba(102, 126, 234, 0.5); background: rgba(255, 255, 255, 0.08); box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); }
+        .custom-dropdown-arrow { width: 12px; height: 12px; transition: transform 0.3s ease; flex-shrink: 0; margin-left: 0.5rem; }
+        .custom-dropdown-toggle.active .custom-dropdown-arrow { transform: rotate(180deg); }
+        .custom-dropdown-menu { position: absolute; top: calc(100% + 0.5rem); left: 0; right: 0; background: rgba(30, 30, 46, 0.98); backdrop-filter: blur(20px); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 12px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); padding: 0.5rem; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease; z-index: 1000; max-height: 300px; overflow-y: auto; }
+        .custom-dropdown-menu.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .custom-dropdown-item { padding: 0.75rem 1rem; color: rgba(255, 255, 255, 0.9); font-size: 0.875rem; font-weight: 500; cursor: pointer; border-radius: 8px; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.75rem; font-family: 'Outfit', sans-serif; white-space: nowrap; }
+        .custom-dropdown-item:hover { background: rgba(102, 126, 234, 0.2); color: white; }
+        .custom-dropdown-item.selected { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; font-weight: 600; }
+        .custom-dropdown-item i { width: 16px; font-size: 0.875rem; flex-shrink: 0; }
+        .custom-dropdown-item span { flex: 1; }
+        .custom-dropdown-item .checkmark { margin-left: auto; opacity: 0; transition: opacity 0.3s ease; flex-shrink: 0; }
+        .custom-dropdown-item.selected .checkmark { opacity: 1; }
         .login-image-side { background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%); padding: 3rem 2.5rem; display: flex; align-items: center; }
         footer { padding: 2rem; background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px); border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center; }
         .footer-text { color: rgba(255, 255, 255, 0.6); font-size: 0.875rem; }
@@ -170,13 +189,37 @@
                             <label>Account Type</label>
                             <div class="input-wrapper">
                                 <i class="fas fa-user-tag input-icon"></i>
-                                <select name="role" class="form-control" required>
-                                    <option value="" disabled selected>Select account type</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="student">Student</option>
-                                    <option value="academy">Academy</option>
-                                    <option value="center">Center</option>
-                                </select>
+                                <div class="custom-dropdown" id="role-dropdown" style="width: 100%;">
+                                    <div class="custom-dropdown-toggle">
+                                        <span>Select account type</span>
+                                        <svg class="custom-dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+                                            <path fill="currentColor" d="M6 9L1 4h10z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="custom-dropdown-menu">
+                                        <div class="custom-dropdown-item" data-value="admin">
+                                            <i class="fas fa-user-shield"></i>
+                                            <span>Admin</span>
+                                            <i class="fas fa-check checkmark"></i>
+                                        </div>
+                                        <div class="custom-dropdown-item" data-value="student">
+                                            <i class="fas fa-user-graduate"></i>
+                                            <span>Student</span>
+                                            <i class="fas fa-check checkmark"></i>
+                                        </div>
+                                        <div class="custom-dropdown-item" data-value="academy">
+                                            <i class="fas fa-school"></i>
+                                            <span>Academy</span>
+                                            <i class="fas fa-check checkmark"></i>
+                                        </div>
+                                        <div class="custom-dropdown-item" data-value="center">
+                                            <i class="fas fa-building"></i>
+                                            <span>Center</span>
+                                            <i class="fas fa-check checkmark"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="role" id="role" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -236,7 +279,83 @@
         <p class="footer-text">© 2026 TotalWellness. All rights reserved.</p>
     </footer>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        // Custom Dropdown Initialization Function
+        function initCustomDropdown(dropdownId, onChangeCallback) {
+            const dropdown = $('#' + dropdownId);
+            if (!dropdown.length) return;
+            
+            const toggle = dropdown.find('.custom-dropdown-toggle');
+            const menu = dropdown.find('.custom-dropdown-menu');
+            const items = dropdown.find('.custom-dropdown-item');
+            const selectedText = toggle.find('span').first();
+            
+            // Toggle dropdown
+            toggle.on('click', function(e) {
+                e.stopPropagation();
+                
+                // Close other dropdowns
+                $('.custom-dropdown-toggle').not(this).removeClass('active');
+                $('.custom-dropdown-menu').not(menu).removeClass('show');
+                
+                toggle.toggleClass('active');
+                menu.toggleClass('show');
+            });
+            
+            // Select item
+            items.on('click', function() {
+                const value = $(this).data('value');
+                const text = $(this).find('span').first().text();
+                
+                // Update selected state
+                items.removeClass('selected');
+                $(this).addClass('selected');
+                
+                // Update toggle text
+                selectedText.text(text);
+                
+                // Store value
+                dropdown.data('selected-value', value);
+                
+                // Close dropdown
+                toggle.removeClass('active');
+                menu.removeClass('show');
+                
+                // Callback
+                if (typeof onChangeCallback === 'function') {
+                    onChangeCallback(value, text);
+                }
+            });
+            
+            // Close dropdown when clicking outside
+            $(document).on('click', function(e) {
+                if (!dropdown.is(e.target) && dropdown.has(e.target).length === 0) {
+                    toggle.removeClass('active');
+                    menu.removeClass('show');
+                }
+            });
+            
+            return {
+                getValue: function() {
+                    return dropdown.data('selected-value') || '';
+                },
+                setValue: function(value) {
+                    const item = items.filter('[data-value="' + value + '"]');
+                    if (item.length) {
+                        item.trigger('click');
+                    }
+                }
+            };
+        }
+        
+        // Initialize custom dropdown
+        $(document).ready(function() {
+            initCustomDropdown('role-dropdown', function(value) {
+                $('#role').val(value);
+            });
+        });
+        
         // Mobile Menu Toggle
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navCenter = document.querySelector('.nav-center');

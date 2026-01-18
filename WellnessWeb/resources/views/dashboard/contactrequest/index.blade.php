@@ -78,23 +78,161 @@
         background: rgba(255, 255, 255, 0.1);
         border: 1px solid var(--glass-border);
         border-radius: 10px;
-        padding: 0.625rem 1rem;
+        padding: 0.625rem 2.5rem 0.625rem 1rem;
         color: white;
         font-size: 0.875rem;
+        font-weight: 500;
         cursor: pointer;
         transition: all 0.3s ease;
-        min-width: 150px;
+        min-width: 180px;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 12px;
+    }
+    
+    .filter-select:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(102, 126, 234, 0.4);
     }
     
     .filter-select:focus {
         outline: none;
         border-color: rgba(102, 126, 234, 0.5);
         background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
     }
     
     .filter-select option {
-        background: #1a1a2e;
+        background: #1e1e2e;
         color: white;
+        padding: 0.75rem 1rem;
+        font-weight: 500;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .filter-select option:hover {
+        background: rgba(102, 126, 234, 0.3);
+    }
+    
+    .filter-select option:checked {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-weight: 600;
+    }
+    
+    .filter-select option[value=""] {
+        font-weight: 600;
+    }
+    
+    /* Custom Dropdown */
+    .custom-dropdown {
+        position: relative;
+        min-width: 180px;
+    }
+    
+    .custom-dropdown-toggle {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--glass-border);
+        border-radius: 10px;
+        padding: 0.625rem 2.5rem 0.625rem 1rem;
+        color: white;
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        user-select: none;
+    }
+    
+    .custom-dropdown-toggle:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(102, 126, 234, 0.4);
+    }
+    
+    .custom-dropdown-toggle.active {
+        border-color: rgba(102, 126, 234, 0.5);
+        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    
+    .custom-dropdown-arrow {
+        width: 12px;
+        height: 12px;
+        transition: transform 0.3s ease;
+    }
+    
+    .custom-dropdown-toggle.active .custom-dropdown-arrow {
+        transform: rotate(180deg);
+    }
+    
+    .custom-dropdown-menu {
+        position: absolute;
+        top: calc(100% + 0.5rem);
+        left: 0;
+        right: 0;
+        background: rgba(30, 30, 46, 0.98);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(102, 126, 234, 0.3);
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        padding: 0.5rem;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        z-index: 1000;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    
+    .custom-dropdown-menu.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    
+    .custom-dropdown-item {
+        padding: 0.75rem 1rem;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    
+    .custom-dropdown-item:hover {
+        background: rgba(102, 126, 234, 0.2);
+        color: white;
+    }
+    
+    .custom-dropdown-item.selected {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-weight: 600;
+    }
+    
+    .custom-dropdown-item i {
+        width: 16px;
+        font-size: 0.875rem;
+    }
+    
+    .custom-dropdown-item .checkmark {
+        margin-left: auto;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .custom-dropdown-item.selected .checkmark {
+        opacity: 1;
     }
     
     .requests-grid {
@@ -305,12 +443,36 @@
             <i class="fas fa-search search-icon"></i>
             <input type="text" id="request-search" class="search-input" placeholder="Search by name or message...">
         </div>
-        <select id="type-filter" class="filter-select">
-            <option value="">All Types</option>
-            <option value="trade_in">Trade In</option>
-            <option value="support">Support</option>
-            <option value="contact">Contact</option>
-        </select>
+        <div class="custom-dropdown" id="type-filter-dropdown">
+            <div class="custom-dropdown-toggle">
+                <span id="selected-type">All Types</span>
+                <svg class="custom-dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+                    <path fill="currentColor" d="M6 9L1 4h10z"/>
+                </svg>
+            </div>
+            <div class="custom-dropdown-menu">
+                <div class="custom-dropdown-item selected" data-value="">
+                    <i class="fas fa-check-circle"></i>
+                    <span>All Types</span>
+                    <i class="fas fa-check checkmark"></i>
+                </div>
+                <div class="custom-dropdown-item" data-value="trade_in">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Trade In</span>
+                    <i class="fas fa-check checkmark"></i>
+                </div>
+                <div class="custom-dropdown-item" data-value="support">
+                    <i class="fas fa-headset"></i>
+                    <span>Support</span>
+                    <i class="fas fa-check checkmark"></i>
+                </div>
+                <div class="custom-dropdown-item" data-value="contact">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact</span>
+                    <i class="fas fa-check checkmark"></i>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Requests Grid -->
@@ -331,20 +493,64 @@
 
     <script type="text/javascript">
         let allRequests = [];
+        let currentTypeFilter = '';
         
         $(document).ready(function() {
             loadRequests();
+            initCustomDropdown();
             
             // Search functionality
             $('#request-search').on('input', function() {
                 filterRequests();
             });
+        });
+        
+        // Custom Dropdown Functionality
+        function initCustomDropdown() {
+            const dropdown = $('#type-filter-dropdown');
+            const toggle = dropdown.find('.custom-dropdown-toggle');
+            const menu = dropdown.find('.custom-dropdown-menu');
+            const items = dropdown.find('.custom-dropdown-item');
+            const selectedText = $('#selected-type');
             
-            // Type filter
-            $('#type-filter').on('change', function() {
+            // Toggle dropdown
+            toggle.on('click', function(e) {
+                e.stopPropagation();
+                toggle.toggleClass('active');
+                menu.toggleClass('show');
+            });
+            
+            // Select item
+            items.on('click', function() {
+                const value = $(this).data('value');
+                const text = $(this).find('span').text();
+                
+                // Update selected state
+                items.removeClass('selected');
+                $(this).addClass('selected');
+                
+                // Update toggle text
+                selectedText.text(text);
+                
+                // Update filter value
+                currentTypeFilter = value;
+                
+                // Close dropdown
+                toggle.removeClass('active');
+                menu.removeClass('show');
+                
+                // Apply filter
                 filterRequests();
             });
-        });
+            
+            // Close dropdown when clicking outside
+            $(document).on('click', function(e) {
+                if (!dropdown.is(e.target) && dropdown.has(e.target).length === 0) {
+                    toggle.removeClass('active');
+                    menu.removeClass('show');
+                }
+            });
+        }
         
         function loadRequests() {
             $.ajax({
@@ -371,7 +577,6 @@
         
         function filterRequests() {
             const searchTerm = $('#request-search').val().toLowerCase();
-            const typeFilter = $('#type-filter').val();
             
             let filtered = allRequests;
             
@@ -385,9 +590,9 @@
             }
             
             // Filter by type
-            if (typeFilter) {
+            if (currentTypeFilter) {
                 filtered = filtered.filter(function(request) {
-                    return request.type.toLowerCase().includes(typeFilter);
+                    return request.type.toLowerCase().includes(currentTypeFilter);
                 });
             }
             

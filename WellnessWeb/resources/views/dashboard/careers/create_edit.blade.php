@@ -249,27 +249,46 @@
 
             <div class="form-group">
                 <label for="status">Status *</label>
-                <select id="status" name="status" class="form-control" required>
-                    <option disabled {{ $currentStatus == '' ? 'selected' : '' }}>Select status</option>
-                    @foreach ($statuses as $status)
-                        <option value="{{ $status }}" {{ $currentStatus == $status ? 'selected' : '' }}>
-                            {{ ucfirst($status) }}
-                        </option>
-                    @endforeach
-                </select>
+                <div class="custom-dropdown" id="status-dropdown">
+                    <div class="custom-dropdown-toggle">
+                        <span>{{ $currentStatus ? ucfirst($currentStatus) : 'Select status' }}</span>
+                        <svg class="custom-dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+                            <path fill="currentColor" d="M6 9L1 4h10z"/>
+                        </svg>
+                    </div>
+                    <div class="custom-dropdown-menu">
+                        @foreach ($statuses as $status)
+                        <div class="custom-dropdown-item {{ $currentStatus == $status ? 'selected' : '' }}" data-value="{{ $status }}">
+                            <i class="fas fa-{{ $status == 'active' ? 'check-circle' : 'pause-circle' }}"></i>
+                            <span>{{ ucfirst($status) }}</span>
+                            <i class="fas fa-check checkmark"></i>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                <input type="hidden" id="status" name="status" value="{{ $currentStatus }}" required>
             </div>
 
             <div class="form-group">
                 <label for="account_id">Academy *</label>
-                <select name="account_id" id="account_id" class="form-control" required>
-                    <option disabled value="">Select academy</option>
-                    @foreach ($centers as $id => $name)
-                        <option value="{{ $id }}"
-                                {{ old('account_id', isset($career) ? $career->account_id : null) == $id ? 'selected' : '' }}>
-                            {{ $name }}
-                        </option>
-                    @endforeach
-                </select>
+                <div class="custom-dropdown" id="academy-dropdown">
+                    <div class="custom-dropdown-toggle">
+                        <span>{{ old('account_id', isset($career) ? $centers[$career->account_id] ?? 'Select academy' : 'Select academy') }}</span>
+                        <svg class="custom-dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+                            <path fill="currentColor" d="M6 9L1 4h10z"/>
+                        </svg>
+                    </div>
+                    <div class="custom-dropdown-menu">
+                        @foreach ($centers as $id => $name)
+                        <div class="custom-dropdown-item {{ old('account_id', isset($career) ? $career->account_id : null) == $id ? 'selected' : '' }}" data-value="{{ $id }}">
+                            <i class="fas fa-building"></i>
+                            <span>{{ $name }}</span>
+                            <i class="fas fa-check checkmark"></i>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                <input type="hidden" id="account_id" name="account_id" value="{{ old('account_id', isset($career) ? $career->account_id : '') }}" required>
             </div>
         </div>
 
@@ -307,4 +326,16 @@
 @endsection
 
 @section('js')
+<script>
+    $(document).ready(function() {
+        // Initialize custom dropdowns
+        initCustomDropdown('status-dropdown', function(value) {
+            $('#status').val(value);
+        });
+        
+        initCustomDropdown('academy-dropdown', function(value) {
+            $('#account_id').val(value);
+        });
+    });
+</script>
 @endsection

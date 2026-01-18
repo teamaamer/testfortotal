@@ -1,12 +1,15 @@
-@foreach ($devices as $device)
-    <div class="col-md-3">
-        <div class="card">
-            <img class="card-img-top"
-                src="{{ asset('/uploads/products/' . $device->avatar) }}" alt="Device">
-            <div class="card-body">
-                <h5 class="card-title">{{$device->name}}</h5>
-                <a href="{{ url('dashboard/devices/' . $device->id ) }}" class="btn btn-primary btn-sm mt-2 w-100">Learn More</a>
+<div class="devices-grid">
+    @foreach ($devices as $device)
+        <div class="device-card">
+            <img class="device-image"
+                src="{{ asset('/uploads/products/' . $device->avatar) }}" 
+                alt="{{ $device->name }}">
+            <div class="device-body">
+                <h3 class="device-name">{{ $device->name }}</h3>
+                <a href="{{ url('dashboard/devices/' . $device->id) }}" class="device-btn">
+                    <i class="fas fa-arrow-right"></i> Learn More
+                </a>
             </div>
         </div>
-    </div>
-@endforeach
+    @endforeach
+</div>

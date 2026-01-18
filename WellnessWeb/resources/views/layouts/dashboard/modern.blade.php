@@ -17,6 +17,15 @@
             --glass-border: rgba(255, 255, 255, 0.1);
         }
         body { font-family: 'Outfit', sans-serif; background: var(--dark-bg); color: #ffffff; min-height: 100vh; overflow-x: hidden; }
+        
+        /* Global Input Font Styles */
+        input, textarea, select, button {
+            font-family: 'Outfit', sans-serif !important;
+        }
+        input::placeholder, textarea::placeholder {
+            font-family: 'Outfit', sans-serif !important;
+        }
+        
         .animated-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%); }
         .animated-bg::before { content: ''; position: absolute; width: 200%; height: 200%; background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 1px, transparent 1px); background-size: 50px 50px; animation: moveBackground 20s linear infinite; }
         @keyframes moveBackground { 0% { transform: translate(0, 0); } 100% { transform: translate(50px, 50px); } }
@@ -38,9 +47,12 @@
         .user-info { padding: 1rem; border-bottom: 1px solid rgba(0, 0, 0, 0.1); margin-bottom: 0.5rem; }
         .user-name { font-weight: 600; color: #333; font-size: 1rem; }
         .user-role { font-size: 0.875rem; color: #666; }
-        .dropdown-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; color: #333; text-decoration: none; border-radius: 8px; transition: all 0.3s ease; }
-        .dropdown-item:hover { background: rgba(102, 126, 234, 0.1); }
-        .dropdown-item i { width: 20px; }
+        .dropdown-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; color: #000 !important; text-decoration: none; border-radius: 8px; transition: all 0.3s ease; font-weight: 500; }
+        .dropdown-item:hover { background: rgba(102, 126, 234, 0.1) !important; color: #000 !important; }
+        .dropdown-item i { width: 20px; color: #000 !important; }
+        .dropdown-item.logout-btn { color: #dc3545 !important; }
+        .dropdown-item.logout-btn:hover { background: rgba(220, 53, 69, 0.1) !important; color: #dc3545 !important; }
+        .dropdown-item.logout-btn i { color: #dc3545 !important; }
         
         /* Sidebar */
         .sidebar { position: fixed; left: 0; top: 80px; width: 280px; height: calc(100vh - 80px); background: linear-gradient(180deg, rgba(163, 140, 196, 0.15) 0%, rgba(123, 79, 214, 0.1) 100%); backdrop-filter: blur(20px); border-right: 1px solid var(--glass-border); padding: 1.5rem 0; overflow-y: auto; overflow-x: hidden; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s ease; z-index: 999; }
@@ -50,6 +62,203 @@
         .sidebar-menu a:hover, .sidebar-menu a.active { background: var(--primary-gradient); color: white; }
         .sidebar-menu i { width: 24px; font-size: 1.125rem; transition: margin 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .sidebar-menu a span { transition: opacity 0.3s ease, transform 0.3s ease; }
+        
+        /* Custom Dropdown Menus */
+        .dropdown-menu {
+            background: rgba(30, 30, 46, 0.95) !important;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(102, 126, 234, 0.3) !important;
+            border-radius: 12px !important;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
+            padding: 0.5rem !important;
+            margin-top: 0.5rem !important;
+        }
+
+        .dropdown-item {
+            color: rgba(255, 255, 255, 0.9) !important;
+            padding: 0.75rem 1rem !important;
+            border-radius: 8px !important;
+            transition: all 0.3s ease !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.5rem !important;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(102, 126, 234, 0.2) !important;
+            color: white !important;
+        }
+
+        .dropdown-item.text-danger {
+            color: #ff4757 !important;
+        }
+
+        .dropdown-item.text-danger:hover {
+            background: rgba(255, 71, 87, 0.2) !important;
+            color: #ff4757 !important;
+        }
+
+        .dropdown-divider {
+            border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+            margin: 0.5rem 0 !important;
+        }
+
+        /* Custom Select Dropdowns */
+        select.form-control,
+        select.custom-select,
+        select {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            border-radius: 10px !important;
+            color: white !important;
+            padding: 0.75rem 1rem !important;
+            transition: all 0.3s ease !important;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 1rem center !important;
+            background-size: 12px !important;
+            padding-right: 2.5rem !important;
+        }
+
+        select.form-control:focus,
+        select.custom-select:focus,
+        select:focus {
+            outline: none !important;
+            border-color: rgba(102, 126, 234, 0.5) !important;
+            background: rgba(255, 255, 255, 0.15) !important;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+        }
+
+        select.form-control option,
+        select.custom-select option,
+        select option {
+            background: #1a1a2e !important;
+            color: white !important;
+            padding: 0.75rem 1rem !important;
+        }
+
+        select.form-control option:hover,
+        select.custom-select option:hover,
+        select option:hover {
+            background: rgba(102, 126, 234, 0.3) !important;
+        }
+
+        select.form-control option:checked,
+        select.custom-select option:checked,
+        select option:checked {
+            background: rgba(102, 126, 234, 0.5) !important;
+            color: white !important;
+        }
+        
+        /* Custom Styled Dropdown Component */
+        .custom-dropdown {
+            position: relative;
+            min-width: 180px;
+        }
+        
+        .custom-dropdown-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 0.75rem 2.5rem 0.75rem 1rem;
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+        }
+        
+        .custom-dropdown-toggle:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(102, 126, 234, 0.4);
+        }
+        
+        .custom-dropdown-toggle.active {
+            border-color: rgba(102, 126, 234, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .custom-dropdown-arrow {
+            width: 12px;
+            height: 12px;
+            transition: transform 0.3s ease;
+        }
+        
+        .custom-dropdown-toggle.active .custom-dropdown-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .custom-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            left: 0;
+            right: 0;
+            background: rgba(30, 30, 46, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            padding: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .custom-dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .custom-dropdown-item {
+            padding: 0.75rem 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .custom-dropdown-item:hover {
+            background: rgba(102, 126, 234, 0.2);
+            color: white;
+        }
+        
+        .custom-dropdown-item.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .custom-dropdown-item i {
+            width: 16px;
+            font-size: 0.875rem;
+        }
+        
+        .custom-dropdown-item .checkmark {
+            margin-left: auto;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .custom-dropdown-item.selected .checkmark {
+            opacity: 1;
+        }
         
         /* Main Content */
         .main-content { 
@@ -186,15 +395,15 @@
                             <div class="user-name">{{ Auth::user()->account->name }}</div>
                             <div class="user-role">{{ ucfirst(Auth::user()->role) }}</div>
                         </div>
-                        <a href="{{ url('dashboard/accounts/' . Auth::user()->account->id) }}" class="dropdown-item">
-                            <i class="fas fa-user"></i> My Profile
+                        <a href="{{ url('dashboard/accounts/' . Auth::user()->account->id) }}" class="dropdown-item" style="color: #000 !important;">
+                            <i class="fas fa-user" style="color: #000 !important;"></i> My Profile
                         </a>
-                        <a href="{{ url('dashboard/accounts/' . Auth::user()->account->id . '/edit') }}" class="dropdown-item">
-                            <i class="fas fa-cog"></i> Settings
+                        <a href="{{ url('dashboard/accounts/' . Auth::user()->account->id . '/edit') }}" class="dropdown-item" style="color: #000 !important;">
+                            <i class="fas fa-cog" style="color: #000 !important;"></i> Settings
                         </a>
                         <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
                             @csrf
-                            <button type="submit" class="dropdown-item" style="width: 100%; background: none; border: none; cursor: pointer; font-family: 'Outfit', sans-serif; font-size: 1rem;">
+                            <button type="submit" class="dropdown-item logout-btn" style="width: 100%; background: none; border: none; cursor: pointer; font-family: 'Outfit', sans-serif; font-size: 1rem;">
                                 <i class="fas fa-sign-out-alt"></i> Logout
                             </button>
                         </form>
@@ -276,6 +485,7 @@
         @yield('content')
     </main>
     
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         // Sidebar Toggle
@@ -315,6 +525,74 @@
         @if (session('success'))
             toastr.success("{{ session('success') }}");
         @endif
+        
+        // Global Custom Dropdown Initialization
+        window.initCustomDropdown = function(dropdownId, onChangeCallback) {
+            const dropdown = $('#' + dropdownId);
+            if (!dropdown.length) return;
+            
+            const toggle = dropdown.find('.custom-dropdown-toggle');
+            const menu = dropdown.find('.custom-dropdown-menu');
+            const items = dropdown.find('.custom-dropdown-item');
+            const selectedText = toggle.find('span').first();
+            
+            // Toggle dropdown
+            toggle.on('click', function(e) {
+                e.stopPropagation();
+                
+                // Close other dropdowns
+                $('.custom-dropdown-toggle').not(this).removeClass('active');
+                $('.custom-dropdown-menu').not(menu).removeClass('show');
+                
+                toggle.toggleClass('active');
+                menu.toggleClass('show');
+            });
+            
+            // Select item
+            items.on('click', function() {
+                const value = $(this).data('value');
+                const text = $(this).find('span').first().text();
+                
+                // Update selected state
+                items.removeClass('selected');
+                $(this).addClass('selected');
+                
+                // Update toggle text
+                selectedText.text(text);
+                
+                // Store value
+                dropdown.data('selected-value', value);
+                
+                // Close dropdown
+                toggle.removeClass('active');
+                menu.removeClass('show');
+                
+                // Callback
+                if (typeof onChangeCallback === 'function') {
+                    onChangeCallback(value, text);
+                }
+            });
+            
+            // Close dropdown when clicking outside
+            $(document).on('click', function(e) {
+                if (!dropdown.is(e.target) && dropdown.has(e.target).length === 0) {
+                    toggle.removeClass('active');
+                    menu.removeClass('show');
+                }
+            });
+            
+            return {
+                getValue: function() {
+                    return dropdown.data('selected-value') || '';
+                },
+                setValue: function(value) {
+                    const item = items.filter('[data-value="' + value + '"]');
+                    if (item.length) {
+                        item.trigger('click');
+                    }
+                }
+            };
+        };
     </script>
     
     @yield('js')
