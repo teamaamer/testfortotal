@@ -675,9 +675,19 @@
 
     <!-- Course Cover Section -->
     <div class="course-cover">
-        <img src="{{ asset('/uploads/courses/' . $course->image) }}" 
-             alt="{{ $course->title }}" 
-             class="course-cover-image">
+        @php
+            // Clean up the image path - remove ../ prefix if present
+            $imagePath = $course->image ? str_replace('../', '', $course->image) : null;
+            // If path doesn't start with 'uploads/', prepend it
+            if ($imagePath && !str_starts_with($imagePath, 'uploads/')) {
+                $imagePath = 'uploads/courses/' . $imagePath;
+            }
+        @endphp
+        @if($imagePath && file_exists(public_path($imagePath)))
+            <img src="{{ asset($imagePath) }}" alt="{{ $course->title }}" class="course-cover-image">
+        @else
+            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&h=800&fit=crop" alt="{{ $course->title }}" class="course-cover-image">
+        @endif
         <div class="course-cover-overlay"></div>
         
         <div class="course-actions">

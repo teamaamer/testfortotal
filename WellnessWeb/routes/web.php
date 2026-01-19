@@ -18,10 +18,18 @@ use App\Http\Controllers\Dashboard\NewsletterSubscriptionController;
 use App\Models\ContactRequest;
 use App\Models\Course;
 use App\Models\Device;
+use App\Models\Career;
 
 Route::get('/', function () {
     return view('welcome-modern');
 });
+
+Route::get('/careers', function () {
+    $careers = Career::where('status', 'active')
+        ->latest()
+        ->paginate(12);
+    return view('careers')->with(compact('careers'));
+})->name('careers');
 
 Route::get('/courses', function () {
 

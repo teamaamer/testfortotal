@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maintenance Services - Total Wellness</title>
+    <title>Careers - Total Wellness</title>
     
     <link rel="icon" type="image/png" href="{{ asset('assets/home/img/logo.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -59,25 +59,28 @@
         .hero-content { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
         .hero-content h1 { font-size: 4rem; font-weight: 800; margin-bottom: 1.5rem; background: linear-gradient(135deg, #fff 0%, #667eea 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.2; }
         .hero-content p { font-size: 1.25rem; color: rgba(255, 255, 255, 0.8); margin-bottom: 2rem; line-height: 1.8; }
-        .info-section { max-width: 1200px; margin: 0 auto 80px; padding: 0 2rem; }
-        .info-card { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 30px; padding: 3rem; text-align: center; box-shadow: var(--shadow-lg); }
-        .info-card h2 { font-size: 2rem; font-weight: 700; color: white; margin-bottom: 1.5rem; }
-        .info-card p { font-size: 1.125rem; color: rgba(255, 255, 255, 0.8); line-height: 1.8; }
-        .form-section { max-width: 800px; margin: 0 auto 100px; padding: 0 2rem; }
-        .form-card { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 30px; padding: 3rem; box-shadow: var(--shadow-lg); }
-        .form-card h3 { font-size: 2rem; font-weight: 700; color: white; margin-bottom: 2rem; text-align: center; }
-        .form-group { margin-bottom: 1.5rem; }
-        .form-group input, .form-group select { width: 100%; padding: 1rem 1.5rem; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); border-radius: 16px; color: white; font-family: 'Outfit', sans-serif; font-size: 1rem; transition: all 0.3s ease; }
-        .form-group input:focus, .form-group select:focus { outline: none; border-color: #667eea; background: rgba(255, 255, 255, 0.08); }
-        .form-group input::placeholder { color: rgba(255, 255, 255, 0.4); }
-        .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1.5rem center; }
-        .form-group select option { background: #1a1a2e; color: white; }
-        .submit-btn { width: 100%; padding: 1rem 2rem; background: var(--primary-gradient); color: white; border: none; border-radius: 50px; font-weight: 600; font-size: 1.125rem; cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow-md); }
-        .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4); }
-        .alert { padding: 1rem 1.5rem; border-radius: 16px; margin-bottom: 1.5rem; font-weight: 500; }
-        .alert-success { background: rgba(76, 175, 80, 0.2); border: 1px solid rgba(76, 175, 80, 0.4); color: #81c784; }
-        .alert-danger { background: rgba(244, 67, 54, 0.2); border: 1px solid rgba(244, 67, 54, 0.4); color: #e57373; }
-        .alert-info { background: rgba(33, 150, 243, 0.2); border: 1px solid rgba(33, 150, 243, 0.4); color: #64b5f6; }
+        .careers-section { max-width: 1400px; margin: 0 auto; padding: 0 2rem 100px; }
+        .section-title { text-align: center; font-size: 2.5rem; font-weight: 700; margin-bottom: 3rem; background: linear-gradient(135deg, #fff 0%, #667eea 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .careers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 2rem; }
+        .career-card { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; transition: all 0.4s ease; box-shadow: var(--shadow-md); }
+        .career-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(102, 126, 234, 0.25); border-color: rgba(102, 126, 234, 0.4); }
+        .career-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 1.5rem; }
+        .career-title { font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 0.5rem; }
+        .career-location { display: flex; align-items: center; gap: 0.5rem; color: rgba(255, 255, 255, 0.6); font-size: 0.9rem; }
+        .career-salary { padding: 0.5rem 1rem; background: var(--primary-gradient); border-radius: 50px; color: white; font-weight: 600; font-size: 0.875rem; white-space: nowrap; }
+        .career-summary { color: rgba(255, 255, 255, 0.7); line-height: 1.7; font-size: 0.9375rem; margin-bottom: 1.5rem; }
+        .career-footer { display: flex; justify-content: space-between; align-items: center; }
+        .career-company { color: rgba(255, 255, 255, 0.5); font-size: 0.875rem; }
+        .apply-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: var(--primary-gradient); color: white; text-decoration: none; border-radius: 50px; font-weight: 600; transition: all 0.3s ease; }
+        .apply-btn:hover { transform: translateX(5px); box-shadow: var(--shadow-md); color: white; }
+        .empty-state { text-align: center; padding: 4rem 2rem; }
+        .empty-state i { font-size: 4rem; color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; }
+        .empty-state h3 { font-size: 1.5rem; color: white; margin-bottom: 1rem; }
+        .empty-state p { color: rgba(255, 255, 255, 0.6); }
+        .pagination { display: flex; justify-content: center; gap: 0.5rem; margin-top: 3rem; }
+        .pagination a, .pagination span { padding: 0.75rem 1.25rem; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; color: white; text-decoration: none; transition: all 0.3s ease; }
+        .pagination a:hover { background: var(--primary-gradient); transform: translateY(-2px); }
+        .pagination .active { background: var(--primary-gradient); }
         footer { background: rgba(15, 15, 35, 0.95); backdrop-filter: blur(20px); border-top: 1px solid var(--glass-border); padding: 4rem 2rem 2rem; text-align: center; }
         .footer-logo { height: 60px; margin-bottom: 2rem; }
         .footer-text { max-width: 600px; margin: 0 auto 2rem; color: rgba(255, 255, 255, 0.6); line-height: 1.8; }
@@ -85,7 +88,7 @@
         .social-links a { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 50%; color: white; font-size: 1.25rem; transition: all 0.3s ease; }
         .social-links a:hover { background: var(--primary-gradient); transform: translateY(-5px); box-shadow: var(--shadow-md); }
         .copyright { color: rgba(255, 255, 255, 0.5); font-size: 0.875rem; }
-        @media (max-width: 968px) { .hero-content h1 { font-size: 2.5rem; } .nav-links { display: none; } .form-card { padding: 2rem; } }
+        @media (max-width: 968px) { .hero-content h1 { font-size: 2.5rem; } .careers-grid { grid-template-columns: 1fr; } .nav-links { display: none; } }
     </style>
 </head>
 <body>
@@ -153,47 +156,62 @@
 
     <section class="hero-section">
         <div class="hero-content">
-            <h1>Maintenance Services</h1>
-            <p>Expert maintenance and support for your laser devices</p>
+            <h1>Career Opportunities</h1>
+            <p>Join our team and be part of the wellness revolution</p>
         </div>
     </section>
 
-    <section class="info-section">
-        <div class="info-card">
-            <h2>Smart Solutions</h2>
-            <p>With years of hands-on experience in servicing and maintaining laser devices, we ensure your equipment operates at peak performance. Our team of skilled technicians specializes in preventive maintenance, calibration, and timely repairs, reducing downtime and extending the lifespan of your devices. We understand the precision and care that laser technology demands, and we bring a meticulous, professional approach to every service call. Trust us to keep your laser systems reliable, efficient, and ready for optimal performance.</p>
+    <section class="careers-section">
+        <h2 class="section-title">Open Positions</h2>
+        
+        @if($careers->count() > 0)
+        <div class="careers-grid">
+            @foreach($careers as $career)
+            <article class="career-card">
+                <div class="career-header">
+                    <div>
+                        <h3 class="career-title">{{ $career->title }}</h3>
+                        <div class="career-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>{{ $career->city }}, {{ $career->country }}</span>
+                        </div>
+                    </div>
+                    @if($career->salary)
+                    <div class="career-salary">${{ number_format($career->salary) }}</div>
+                    @endif
+                </div>
+                <p class="career-summary">{{ Str::limit($career->summary, 150) }}</p>
+                <div class="career-footer">
+                    <span class="career-company">
+                        <i class="fas fa-building"></i>
+                        {{ $career->account->name ?? 'Total Wellness' }}
+                    </span>
+                    @auth
+                        <a href="{{ route('careers.apply', $career->id) }}" class="apply-btn">
+                            Apply Now <i class="fas fa-arrow-right"></i>
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}" class="apply-btn">
+                            Login to Apply <i class="fas fa-arrow-right"></i>
+                        </a>
+                    @endauth
+                </div>
+            </article>
+            @endforeach
         </div>
-    </section>
 
-    <section class="form-section">
-        <div class="form-card">
-            <h3>Submit Your Maintenance Request</h3>
-            
-            <div id="contactAlert"></div>
-            
-            <form class="contactForm" method="POST" action="{{ route('contact.maintenance') }}">
-                @csrf
-                <div class="form-group">
-                    <input type="text" name="phone_no" placeholder="Phone Number" required>
-                </div>
-                
-                <div class="form-group">
-                    <select id="device_id" name="device_id" required>
-                        <option value="" disabled selected>Select Target Device Type</option>
-                        @foreach ($devices as $device)
-                            <option value="{{ $device->id }}" {{ (string) old('device_id') === (string) $device->id ? 'selected' : '' }}>
-                                {{ $device->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                
-                <button type="submit" class="submit-btn">
-                    <i class="fas fa-paper-plane"></i>
-                    Submit Request
-                </button>
-            </form>
+        @if ($careers->hasPages())
+        <div class="pagination">
+            {{ $careers->links('pagination::bootstrap-4') }}
         </div>
+        @endif
+        @else
+        <div class="empty-state">
+            <i class="fas fa-briefcase"></i>
+            <h3>No Open Positions</h3>
+            <p>We don't have any open positions at the moment. Please check back later!</p>
+        </div>
+        @endif
     </section>
 
     <footer>
@@ -218,33 +236,6 @@
             } else {
                 nav.classList.remove('scrolled');
             }
-        });
-
-        $('.contactForm').on('submit', function(e) {
-            e.preventDefault();
-            let form = $(this);
-            let alertBox = $('#contactAlert');
-            alertBox.html('');
-
-            $.ajax({
-                url: form.attr('action'),
-                method: 'POST',
-                data: form.serialize(),
-                beforeSend: function() {
-                    alertBox.html('<div class="alert alert-info"><i class="fas fa-spinner fa-spin"></i> Sending...</div>');
-                },
-                success: function(response) {
-                    alertBox.html('<div class="alert alert-success"><i class="fas fa-check-circle"></i> ' + response.message + '</div>');
-                    form.trigger('reset');
-                },
-                error: function(xhr) {
-                    let msg = 'Something went wrong. Please try again.';
-                    if (xhr.responseJSON && xhr.responseJSON.message) {
-                        msg = xhr.responseJSON.message;
-                    }
-                    alertBox.html('<div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> ' + msg + '</div>');
-                }
-            });
         });
     </script>
 </body>

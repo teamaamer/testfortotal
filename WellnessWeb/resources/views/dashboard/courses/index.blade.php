@@ -339,7 +339,19 @@
     <div class="courses-grid">
         @foreach ($courses as $course)
             <div class="course-card">
-                <img class="course-image" src="{{ asset('/uploads/courses/' . $course->image) }}" alt="{{ $course->title }}">
+                @php
+                    // Clean up the image path - remove ../ prefix if present
+                    $imagePath = $course->image ? str_replace('../', '', $course->image) : null;
+                    // If path doesn't start with 'uploads/', prepend it
+                    if ($imagePath && !str_starts_with($imagePath, 'uploads/')) {
+                        $imagePath = 'uploads/courses/' . $imagePath;
+                    }
+                @endphp
+                @if($imagePath && file_exists(public_path($imagePath)))
+                    <img class="course-image" src="{{ asset($imagePath) }}" alt="{{ $course->title }}">
+                @else
+                    <img class="course-image" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=600&fit=crop" alt="{{ $course->title }}">
+                @endif
                 
                 <div class="course-header">
                     <h3 class="course-title">{{ $course->title }}</h3>

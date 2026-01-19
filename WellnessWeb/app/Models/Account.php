@@ -13,6 +13,7 @@ class Account extends Model
         'mobile',
         'user_id',
         'summary',
+        'website',
         'address',
         'city',
         'status',
