@@ -3943,6 +3943,9 @@
             <div class="contact-form">
                 <form id="contactForm" action="{{ route('contact.send') }}" method="POST">
                     @csrf
+
+                    <input type="hidden" name="type" id="type" value="contact">
+                    
                     <div class="form-group">
                         <label>Your Name</label>
                         <input type="text" name="name" required>
