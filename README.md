@@ -2,6 +2,8 @@
 
 This Laravel application is configured for deployment on Vercel.
 
+<!-- Optimized for Vercel deployment -->
+
 ## Prerequisites
 
 Before deploying to Vercel, ensure you have:
