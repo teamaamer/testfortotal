@@ -1,0 +1,6 @@
+/WellnessWeb/vendor
+/WellnessWeb/node_modules
+/WellnessWeb/storage/*.key
+/WellnessWeb/.env
+/WellnessWeb/.env.backup
+/WellnessWeb/.phpunit.result.cache

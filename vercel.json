@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.php",
+      "use": "vercel-php@0.7.1"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(css|js|images|fonts|build|uploads|assets)/(.*)",
+      "dest": "/$1/$2"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "/favicon.ico"
+    },
+    {
+      "src": "/robots.txt",
+      "dest": "/robots.txt"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.php"
+    }
+  ],
+  "env": {
+    "APP_ENV": "production",
+    "APP_DEBUG": "false",
+    "LOG_CHANNEL": "stderr",
+    "SESSION_DRIVER": "cookie"
+  }
+}
