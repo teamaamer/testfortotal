@@ -1,6 +1,14 @@
-/WellnessWeb/vendor
 /WellnessWeb/node_modules
 /WellnessWeb/storage/*.key
-/WellnessWeb/.env
 /WellnessWeb/.env.backup
 /WellnessWeb/.phpunit.result.cache
+/WellnessWeb/tests
+/WellnessWeb/storage/logs
+/WellnessWeb/storage/framework/cache
+/WellnessWeb/storage/framework/sessions
+/WellnessWeb/storage/framework/views
+/WellnessWeb/.git
+/WellnessWeb/.github
+/WellnessWeb/public/hot
+*.md
+!README.md

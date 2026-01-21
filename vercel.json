@@ -3,13 +3,36 @@
   "builds": [
     {
       "src": "api/index.php",
-      "use": "vercel-php@0.7.1"
+      "use": "vercel-php@0.7.1",
+      "config": {
+        "includeFiles": "WellnessWeb/{app,bootstrap,config,database,public,resources,routes,storage,artisan,composer.json,composer.lock}/**"
+      }
+    },
+    {
+      "src": "assets/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "uploads/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "build/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
-      "src": "/(css|js|images|fonts|build|uploads|assets)/(.*)",
-      "dest": "/$1/$2"
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/uploads/(.*)",
+      "dest": "/uploads/$1"
+    },
+    {
+      "src": "/build/(.*)",
+      "dest": "/build/$1"
     },
     {
       "src": "/favicon.ico",
@@ -29,5 +52,11 @@
     "APP_DEBUG": "false",
     "LOG_CHANNEL": "stderr",
     "SESSION_DRIVER": "cookie"
+  },
+  "functions": {
+    "api/index.php": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
   }
 }
